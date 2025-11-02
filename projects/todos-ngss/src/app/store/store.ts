@@ -6,7 +6,7 @@ export interface Todo {
 }
 
 export interface TodoState { todos: Todo[]; }
- 
+
 @Injectable()
 export class TodoStore extends NgSimpleStateBaseSignalStore<TodoState> {
 
@@ -15,10 +15,10 @@ export class TodoStore extends NgSimpleStateBaseSignalStore<TodoState> {
       storeName: 'TodoStore'
     };
   }
-  
+
   initialState(): TodoState {
     return {
-        todos: []
+      todos: []
     };
   }
 
