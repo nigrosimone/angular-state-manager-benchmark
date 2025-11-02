@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const NUM_TODOS = 50_000;
+const NUM_CLICK = 10_000;
 
 function runBenchmark(lib: string) {
   cy.visit(lib === 'ngrx' ? 'http://localhost:4200' : 'http://localhost:4201');
@@ -26,12 +26,12 @@ function runBenchmark(lib: string) {
       const measureName = `render-${lib}-${now}`;
 
       win.performance.mark(startMark);
-      for (let i = 0; i < NUM_TODOS; i++) {
+      for (let i = 0; i < NUM_CLICK; i++) {
         // native DOM click — synchronous in page context
         button.click();
       }
       win.requestAnimationFrame(() => {
-        if (button.innerText !== String(NUM_TODOS)) {
+        if (button.innerText !== String(NUM_CLICK)) {
           throw new Error('Final button text does not match expected count');
         }
         win.performance.mark(endMark);
@@ -48,7 +48,7 @@ function runBenchmark(lib: string) {
 
   }).then(({ duration }) => {
     // Assert that the button shows the expected number of todos (coerce to string)
-    cy.get('button').should('contain.text', String(NUM_TODOS));
+    cy.get('button').should('contain.text', String(NUM_CLICK));
 
     cy.log(`${lib} render: ${duration.toFixed(2)} ms`);
     cy.writeFile(`cypress/results-${lib}.json`, { lib, duration });
