@@ -31,4 +31,9 @@ export class TodoStore extends NgSimpleStateBaseSignalStore<TodoState> {
       todos: [...state.todos, { text }]
     }));
   }
+
+  override deepFreeze(state: TodoState): TodoState {
+    // NB: Skip deep freeze for performance reasons. nGrx does not deep freeze by default.
+    return state;
+  }
 }
