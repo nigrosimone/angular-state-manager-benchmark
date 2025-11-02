@@ -17,7 +17,8 @@
     "benchmark:dev": "npx concurrently -k \"npm run start:ngrx\" \"npm run start:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress run\"",
     "benchmark:dev:open": "npx concurrently -k \"npm run start:ngrx\" \"npm run start:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress open\"",
     "benchmark:prod": "npm run build:ngrx && npm run build:ngss && npx concurrently -k \"npm run serve:ngrx\" \"npm run serve:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress run\"",
-    "benchmark:prod:open": "npm run build:ngrx && npm run build:ngss && npx concurrently -k \"npm run serve:ngrx\" \"npm run serve:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress open\""
+    "benchmark:prod:open": "npm run build:ngrx && npm run build:ngss && npx concurrently -k \"npm run serve:ngrx\" \"npm run serve:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress open\"",
+    "lint": "ng lint"
   },
   "prettier": {
     "printWidth": 100,
@@ -46,9 +47,12 @@
     "@angular/build": "^20.3.8",
     "@angular/cli": "^20.3.8",
     "@angular/compiler-cli": "^20.3.0",
+    "angular-eslint": "20.5.0",
     "concurrently": "^9.2.1",
     "cypress": "^15.5.0",
+    "eslint": "^9.38.0",
     "http-server": "^14.1.1",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "typescript-eslint": "8.46.1"
   }
 }

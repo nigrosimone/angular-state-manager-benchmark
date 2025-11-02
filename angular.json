@@ -63,6 +63,16 @@
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngrx/**/*.ts",
+              "projects/ngrx/**/*.html"
+            ],
+            "eslintConfig": "projects/ngrx/eslint.config.js"
+          }
         }
       }
     },
@@ -126,8 +136,23 @@
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngss/**/*.ts",
+              "projects/ngss/**/*.html"
+            ],
+            "eslintConfig": "projects/ngss/eslint.config.js"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }
