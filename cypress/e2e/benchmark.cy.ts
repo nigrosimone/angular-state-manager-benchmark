@@ -1,26 +1,49 @@
 /// <reference types="cypress" />
 
-const NUM_TODOS = 500;
+const NUM_TODOS = 500_000;
 
 function runBenchmark(lib: string) {
   cy.visit(lib === 'ngrx' ? 'http://localhost:4200' : 'http://localhost:4201');
 
+  cy.get('button').should('contain.text', '0');
+
+  // Execute synchronous clicks and performance measurement inside the page context
   cy.window().then((win) => {
+    // Clear any previous marks/measures to avoid interference
+    win.performance.clearMarks();
+    win.performance.clearMeasures();
 
-    const todoInput = cy.get('button');
-
-    win.performance.mark('start');
-    for (let i = 0; i < NUM_TODOS; i++) {
-      todoInput.click();
+    const button = win.document.querySelector('button') as HTMLButtonElement | null;
+    if (!button) {
+      throw new Error('Could not find button on the page');
     }
-    win.performance.mark('end');
-    win.performance.measure('render', 'start', 'end');
-    const m = win.performance.getEntriesByName('render')[0];
 
-    todoInput.should('contain.text', NUM_TODOS);
+    // Make unique mark names in case tests run multiple times in same session
+    const now = Date.now();
+    const startMark = `start-${lib}-${now}`;
+    const endMark = `end-${lib}-${now}`;
+    const measureName = `render-${lib}-${now}`;
 
-    cy.log(`${lib} render: ${m.duration.toFixed(2)} ms`);
-    cy.writeFile(`cypress/results-${lib}.json`, { lib, duration: m.duration });
+    win.performance.mark(startMark);
+    for (let i = 0; i < NUM_TODOS; i++) {
+      // native DOM click — synchronous in page context
+      button.click();
+    }
+    win.performance.mark(endMark);
+    win.performance.measure(measureName, startMark, endMark);
+
+    const entries = win.performance.getEntriesByName(measureName);
+    const m = entries && entries[0];
+    const duration = m ? m.duration : 0;
+
+    // Return duration and let Cypress handle assertions / file writes outside of raw page ops
+    return { duration };
+  }).then(({ duration }) => {
+    // Assert that the button shows the expected number of todos (coerce to string)
+    cy.get('button').should('contain.text', String(NUM_TODOS));
+
+    cy.log(`${lib} render: ${duration.toFixed(2)} ms`);
+    cy.writeFile(`cypress/results-${lib}.json`, { lib, duration });
   });
 }
 
