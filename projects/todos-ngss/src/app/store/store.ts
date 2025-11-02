@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { NgSimpleStateBaseSignalStore, NgSimpleStateStoreConfig } from 'ng-simple-state';
 
 export interface Todo {
-  id: number;
   text: string;
 }
-
 
 export interface TodoState { todos: Todo[]; }
  
@@ -30,7 +28,7 @@ export class TodoStore extends NgSimpleStateBaseSignalStore<TodoState> {
 
   addTodo(text: string) {
     this.setState(state => ({
-      todos: [...state.todos, { id: state.todos.length, text }]
+      todos: [...state.todos, { text }]
     }));
   }
 }

@@ -1,7 +1,7 @@
 {
-  "NgRx": "31.80",
-  "NgSimpleState": "32.00",
+  "NgRx": "40.90",
+  "NgSimpleState": "55.40",
   "faster": "NgRx",
-  "difference": "0.20",
-  "percent": "0.6"
+  "difference": "14.50",
+  "percent": "26.2"
 }

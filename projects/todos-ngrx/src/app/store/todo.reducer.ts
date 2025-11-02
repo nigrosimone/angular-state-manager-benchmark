@@ -9,6 +9,6 @@ const initialState: TodoState = { todos: [] };
 export const todoReducer = createReducer(
     initialState,
     on(addTodo, (state, { text }) => ({
-        todos: [...state.todos, { id: state.todos.length, text }]
+        todos: [...state.todos, { text }]
     }))
 );

@@ -7,17 +7,17 @@ function runBenchmark(lib: string) {
 
   cy.window().then((win) => {
 
-    const todoInput = cy.get('input');
+    const todoInput = cy.get('button');
 
     win.performance.mark('start');
     for (let i = 0; i < NUM_TODOS; i++) {
-      todoInput.type(`${i}{enter}`);
+      todoInput.click();
     }
     win.performance.mark('end');
     win.performance.measure('render', 'start', 'end');
     const m = win.performance.getEntriesByName('render')[0];
 
-    cy.get('.todos').should('contain.text', NUM_TODOS);
+    todoInput.should('contain.text', NUM_TODOS);
 
     cy.log(`${lib} render: ${m.duration.toFixed(2)} ms`);
     cy.writeFile(`cypress/results-${lib}.json`, { lib, duration: m.duration });
