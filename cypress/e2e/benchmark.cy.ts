@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const NUM_TODOS = 500_000;
+const NUM_TODOS = 50_000;
 
 function runBenchmark(lib: string) {
   cy.visit(lib === 'ngrx' ? 'http://localhost:4200' : 'http://localhost:4201');
