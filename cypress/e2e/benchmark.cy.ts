@@ -56,17 +56,22 @@ describe('Angular Store Benchmark', () => {
       cy.readFile('cypress/results-ngss.json').then((ngss) => {
         const diff = ngss.duration - ngrx.duration;
         const faster = diff > 0 ? 'NgRx' : 'NgSimpleState';
+        const slower = faster === 'NgRx' ? 'NgSimpleState' : 'NgRx';
         const percent = Math.abs(diff) / Math.max(ngrx.duration, ngss.duration) * 100;
+        const ratio = (Math.max(ngrx.duration, ngss.duration) / Math.min(ngrx.duration, ngss.duration)).toFixed(2);
 
         cy.log(`NgRx: ${ngrx.duration.toFixed(2)} ms`);
         cy.log(`NgSimpleState: ${ngss.duration.toFixed(2)} ms`);
         cy.log(`${faster} is faster by ${Math.abs(diff).toFixed(2)} ms (${percent.toFixed(1)}%)`);
+        cy.log(`${faster} is about ${ratio}× faster than ${slower}`);
+
         cy.writeFile(`cypress/results.json`, {
           NgRx: ngrx.duration.toFixed(2),
           NgSimpleState: ngss.duration.toFixed(2),
           faster,
           difference: Math.abs(diff).toFixed(2),
           percent: percent.toFixed(1),
+          ratio,
         });
       });
     });
@@ -78,7 +83,8 @@ describe('Angular Store Benchmark', () => {
 NgRx: ${final.NgRx} ms
 NgSimpleState: ${final.NgSimpleState} ms
 ${final.faster} faster than ${final.difference} ms (${final.percent}%)
-    `);
+${final.faster} is ${final.ratio}× faster
+      `);
     });
   });
 });

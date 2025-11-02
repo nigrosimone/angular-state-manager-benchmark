@@ -22,7 +22,8 @@ npm run benchmark:prod
 3 Output
 
 ```shell
-NgRx: 2029.60 ms
-NgSimpleState: 1795.40 ms
-NgSimpleState faster than 234.20 ms (11.5%)
+NgRx: 2055.70 ms
+NgSimpleState: 2002.80 ms
+NgSimpleState faster than 52.90 ms (2.6%)
+NgSimpleState is 1.03× faster
 ```
