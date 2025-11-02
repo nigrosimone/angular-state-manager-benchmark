@@ -5,11 +5,11 @@ import { NgSimpleStateBaseSignalStore, NgSimpleStateStoreConfig, provideNgSimple
 interface CounterState { count: number; }
 
 @Injectable()
-export class TodoStore extends NgSimpleStateBaseSignalStore<CounterState> {
+export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
 
   storeConfig(): NgSimpleStateStoreConfig<CounterState> {
     return {
-      storeName: 'TodoStore'
+      storeName: 'CounterStore'
     };
   }
 
@@ -30,7 +30,7 @@ export class TodoStore extends NgSimpleStateBaseSignalStore<CounterState> {
   }
 
   override deepFreeze(state: CounterState): CounterState {
-    // NB: Skip deep freeze for performance reasons. nGrx does not deep freeze by default.
+    // NB: Skip deep freeze for performance reasons. Ngrx does not deep freeze by default.
     return state;
   }
 }
@@ -43,7 +43,7 @@ export class TodoStore extends NgSimpleStateBaseSignalStore<CounterState> {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
-  private readonly store = inject(TodoStore);
+  private readonly store = inject(CounterStore);
 
   protected readonly counter = this.store.selectCount();
 
@@ -58,7 +58,7 @@ bootstrapApplication(App, {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideNgSimpleState({ enableDevTool: false }),
-    TodoStore
+    CounterStore
   ]
 })
   .catch((err) => console.error(err));

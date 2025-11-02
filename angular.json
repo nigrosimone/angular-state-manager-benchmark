@@ -3,26 +3,26 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "todos-ngrx": {
+    "ngrx": {
       "projectType": "application",
       "schematics": {},
-      "root": "projects/todos-ngrx",
-      "sourceRoot": "projects/todos-ngrx/src",
+      "root": "projects/ngrx",
+      "sourceRoot": "projects/ngrx/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "projects/todos-ngrx/src/main.ts",
-            "tsConfig": "projects/todos-ngrx/tsconfig.app.json",
+            "browser": "projects/ngrx/src/main.ts",
+            "tsConfig": "projects/ngrx/tsconfig.app.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/todos-ngrx/public"
+                "input": "projects/ngrx/public"
               }
             ],
             "styles": [
-              "projects/todos-ngrx/src/styles.css"
+              "projects/ngrx/src/styles.css"
             ]
           },
           "configurations": {
@@ -53,10 +53,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "todos-ngrx:build:production"
+              "buildTarget": "ngrx:build:production"
             },
             "development": {
-              "buildTarget": "todos-ngrx:build:development"
+              "buildTarget": "ngrx:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -67,40 +67,40 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "projects/todos-ngrx/tsconfig.spec.json",
+            "tsConfig": "projects/ngrx/tsconfig.spec.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/todos-ngrx/public"
+                "input": "projects/ngrx/public"
               }
             ],
             "styles": [
-              "projects/todos-ngrx/src/styles.css"
+              "projects/ngrx/src/styles.css"
             ]
           }
         }
       }
     },
-    "todos-ngss": {
+    "ngss": {
       "projectType": "application",
       "schematics": {},
-      "root": "projects/todos-ngss",
-      "sourceRoot": "projects/todos-ngss/src",
+      "root": "projects/ngss",
+      "sourceRoot": "projects/ngss/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "projects/todos-ngss/src/main.ts",
-            "tsConfig": "projects/todos-ngss/tsconfig.app.json",
+            "browser": "projects/ngss/src/main.ts",
+            "tsConfig": "projects/ngss/tsconfig.app.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/todos-ngss/public"
+                "input": "projects/ngss/public"
               }
             ],
             "styles": [
-              "projects/todos-ngss/src/styles.css"
+              "projects/ngss/src/styles.css"
             ]
           },
           "configurations": {
@@ -131,10 +131,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "todos-ngss:build:production"
+              "buildTarget": "ngss:build:production"
             },
             "development": {
-              "buildTarget": "todos-ngss:build:development"
+              "buildTarget": "ngss:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -145,15 +145,15 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "projects/todos-ngss/tsconfig.spec.json",
+            "tsConfig": "projects/ngss/tsconfig.spec.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/todos-ngss/public"
+                "input": "projects/ngss/public"
               }
             ],
             "styles": [
-              "projects/todos-ngss/src/styles.css"
+              "projects/ngss/src/styles.css"
             ]
           }
         }
