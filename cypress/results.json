@@ -1,8 +1,10 @@
 {
-  "NgRx": "285.70",
-  "NgSimpleState": "169.50",
-  "faster": "NgSimpleState",
-  "difference": "116.20",
-  "percent": "40.7",
-  "ratio": "1.69"
+  "results": {
+    "ngrx": 52.60000014305115,
+    "ngss": 37.90000009536743
+  },
+  "fastest": "ngss",
+  "difference": "14.70",
+  "percent": "27.9",
+  "ratio": "1.39"
 }
