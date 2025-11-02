@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { addTodo } from './store/todo.actions';
 import { TodoState } from './store/todo.reducer';
@@ -9,6 +9,7 @@ import { selectTodos } from './store/todo.selectors';
   template: `
   <button (click)="doAddTodo()">{{todos().length}}</button>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
   private readonly store = inject(Store<{ todoState: TodoState }>);

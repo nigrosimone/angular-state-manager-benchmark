@@ -1,11 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TodoStore } from './store/store';
 
 @Component({
   selector: 'app-root',
   template: `
   <button (click)="doAddTodo()">{{todos().length}}</button>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
   private readonly store = inject(TodoStore);
