@@ -26,7 +26,7 @@ export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
   increment() {
     this.setState(state => ({
       count: state.count + 1
-    }));
+    }), 'increment');
   }
 
   override deepFreeze(state: CounterState): CounterState {
