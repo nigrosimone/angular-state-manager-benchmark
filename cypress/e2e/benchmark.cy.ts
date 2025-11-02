@@ -30,7 +30,7 @@ function runBenchmark(lib: string) {
         // native DOM click — synchronous in page context
         button.click();
       }
-      win.requestAnimationFrame(() => {
+      const finish = () => {
         if (button.innerText !== String(NUM_CLICK)) {
           throw new Error('Final button text does not match expected count');
         }
@@ -43,7 +43,11 @@ function runBenchmark(lib: string) {
 
         // Return duration and let Cypress handle assertions / file writes outside of raw page ops
         return resolve({ duration });
-      });
+      }
+      if (button.innerText === String(NUM_CLICK)) {
+        return finish();
+      }
+      win.requestAnimationFrame(finish);
     });
 
   }).then(({ duration }) => {
