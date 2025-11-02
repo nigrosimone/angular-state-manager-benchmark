@@ -9,35 +9,43 @@ function runBenchmark(lib: string) {
 
   // Execute synchronous clicks and performance measurement inside the page context
   cy.window().then((win) => {
-    // Clear any previous marks/measures to avoid interference
-    win.performance.clearMarks();
-    win.performance.clearMeasures();
+    return new Cypress.Promise<{ duration: number }>((resolve) => {
+      // Clear any previous marks/measures to avoid interference
+      win.performance.clearMarks();
+      win.performance.clearMeasures();
 
-    const button = win.document.querySelector('button') as HTMLButtonElement | null;
-    if (!button) {
-      throw new Error('Could not find button on the page');
-    }
+      const button = win.document.querySelector('button') as HTMLButtonElement | null;
+      if (!button) {
+        throw new Error('Could not find button on the page');
+      }
 
-    // Make unique mark names in case tests run multiple times in same session
-    const now = Date.now();
-    const startMark = `start-${lib}-${now}`;
-    const endMark = `end-${lib}-${now}`;
-    const measureName = `render-${lib}-${now}`;
+      // Make unique mark names in case tests run multiple times in same session
+      const now = Date.now();
+      const startMark = `start-${lib}-${now}`;
+      const endMark = `end-${lib}-${now}`;
+      const measureName = `render-${lib}-${now}`;
 
-    win.performance.mark(startMark);
-    for (let i = 0; i < NUM_TODOS; i++) {
-      // native DOM click — synchronous in page context
-      button.click();
-    }
-    win.performance.mark(endMark);
-    win.performance.measure(measureName, startMark, endMark);
+      win.performance.mark(startMark);
+      for (let i = 0; i < NUM_TODOS; i++) {
+        // native DOM click — synchronous in page context
+        button.click();
+      }
+      win.requestAnimationFrame(() => {
+        if (button.innerText !== String(NUM_TODOS)) {
+          throw new Error('Final button text does not match expected count');
+        }
+        win.performance.mark(endMark);
+        win.performance.measure(measureName, startMark, endMark);
 
-    const entries = win.performance.getEntriesByName(measureName);
-    const m = entries && entries[0];
-    const duration = m ? m.duration : 0;
+        const entries = win.performance.getEntriesByName(measureName);
+        const m = entries && entries[0];
+        const duration = m ? m.duration : 0;
 
-    // Return duration and let Cypress handle assertions / file writes outside of raw page ops
-    return { duration };
+        // Return duration and let Cypress handle assertions / file writes outside of raw page ops
+        return resolve({ duration });
+      });
+    });
+
   }).then(({ duration }) => {
     // Assert that the button shows the expected number of todos (coerce to string)
     cy.get('button').should('contain.text', String(NUM_TODOS));
