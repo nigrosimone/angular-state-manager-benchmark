@@ -63,21 +63,6 @@
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "tsConfig": "projects/ngrx/tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/ngrx/public"
-              }
-            ],
-            "styles": [
-              "projects/ngrx/src/styles.css"
-            ]
-          }
         }
       }
     },
@@ -141,21 +126,6 @@
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "tsConfig": "projects/ngss/tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/ngss/public"
-              }
-            ],
-            "styles": [
-              "projects/ngss/src/styles.css"
-            ]
-          }
         }
       }
     }
