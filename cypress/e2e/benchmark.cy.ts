@@ -71,4 +71,14 @@ describe('Angular Store Benchmark', () => {
       });
     });
   });
+
+  after(() => {
+    cy.readFile('cypress/results.json').then((final) => {
+      cy.task('log', `
+NgRx: ${final.NgRx} ms
+NgSimpleState: ${final.NgSimpleState} ms
+${final.faster} faster than ${final.difference} ms (${final.percent}%)
+    `);
+    });
+  });
 });

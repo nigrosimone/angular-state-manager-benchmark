@@ -19,14 +19,10 @@ npm install
 npm run benchmark:prod
 ```
 
-3 Result in `cypress\results.json`
+3 Output
 
-```json
-{
-  "NgRx": "2189.30",
-  "NgSimpleState": "1769.10",
-  "faster": "NgSimpleState",
-  "difference": "420.20",
-  "percent": "19.2"
-}
+```shell
+NgRx: 2029.60 ms
+NgSimpleState: 1795.40 ms
+NgSimpleState faster than 234.20 ms (11.5%)
 ```
