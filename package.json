@@ -9,9 +9,16 @@
     "test": "ng test",
     "start:ngrx": "ng serve todos-ngrx --port 4200",
     "start:ngss": "ng serve todos-ngss --port 4201",
+    "build:ngrx": "ng build todos-ngrx",
+    "build:ngss": "ng build todos-ngss",
+    "serve:ngrx": "http-server ./dist/todos-ngrx/browser -p 4200",
+    "serve:ngss": "http-server ./dist/todos-ngss/browser -p 4201",
+    "cypress:run": "cypress run",
     "cypress:open": "cypress open",
-    "benchmark": "npx concurrently -k \"npm run start:ngrx\" \"npm run start:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress run\"",
-    "benchmark:open": "npx concurrently -k \"npm run start:ngrx\" \"npm run start:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress open\""
+    "benchmark:dev": "npx concurrently -k \"npm run start:ngrx\" \"npm run start:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress run\"",
+    "benchmark:dev:open": "npx concurrently -k \"npm run start:ngrx\" \"npm run start:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress open\"",
+    "benchmark:prod": "npm run build:ngrx && npm run build:ngss && npx concurrently -k \"npm run serve:ngrx\" \"npm run serve:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress run\"",
+    "benchmark:prod:open": "npm run build:ngrx && npm run build:ngss && npx concurrently -k \"npm run serve:ngrx\" \"npm run serve:ngss\" \"npx wait-on http://localhost:4200 http://localhost:4201 && npx cypress open\""
   },
   "prettier": {
     "printWidth": 100,
@@ -42,6 +49,7 @@
     "@angular/compiler-cli": "^20.3.0",
     "concurrently": "^9.2.1",
     "cypress": "^15.5.0",
+    "http-server": "^14.1.1",
     "typescript": "~5.9.2"
   }
 }
