@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { Injectable, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Injectable, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { NgSimpleStateBaseSignalStore, NgSimpleStateStoreConfig, provideNgSimpleState } from 'ng-simple-state';
 
 interface CounterState { count: number; }
@@ -45,7 +45,7 @@ export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
 export class App {
   private readonly store = inject(CounterStore);
 
-  protected readonly counter = this.store.selectCount();
+  protected readonly counter: Signal<number> = this.store.selectCount();
 
   doIncrement() {
     this.store.increment();

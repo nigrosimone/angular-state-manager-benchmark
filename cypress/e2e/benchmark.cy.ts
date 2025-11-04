@@ -1,15 +1,17 @@
 /// <reference types="cypress" />
 
-// Number of times the button will be clicked in the benchmark
-const NUM_CLICK = 10_000;
-
 // Map each library to its URL
 const urlMap: Record<string, string> = {
   ngrx: 'http://localhost:4200',
   ngss: 'http://localhost:4201',
+  elf: 'http://localhost:4202',
   // add more libraries here
   // foo: 'http://localhost:4202',
 };
+
+
+// Number of times the button will be clicked in the benchmark
+const NUM_CLICK = 10_000;
 
 // List of libraries to benchmark
 const LIBS = Object.keys(urlMap);
