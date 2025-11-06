@@ -4,6 +4,8 @@ Small monorepo with two example of "Angular Counter App" demonstrating different
 
 - `projects\ngrx` — Angular Counter App with NgRx state manager
 - `projects\ngss` — Angular Counter App with NgSimpleState state manager
+- `projects\elf` — Angular Counter App with Elf state manager
+- `projects\ngxs` — Angular Counter App with NGXS state manager
 
 ## Quick start
 
@@ -22,10 +24,15 @@ npm run benchmark:prod
 3 Output
 
 ```shell
-NgRx: 2055.70 ms
-NgSimpleState: 2002.80 ms
-NgSimpleState faster than 52.90 ms (2.6%)
-NgSimpleState is 1.03× faster
+===== FINAL BENCHMARK =====
+ngrx: 595.40 ms
+ngss: 44.00 ms
+elf: 705.60 ms
+ngxs: 182.60 ms
+Fastest: ngss
+Difference: 661.60 ms (93.8%)
+Ratio: 16.04×
+============================
 ```
 
 ## Add a new state manager

@@ -41,6 +41,12 @@
     },
     {
       "path": "./projects/elf/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ngxs/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ngxs/tsconfig.spec.json"
     }
   ]
 }
