@@ -1,11 +1,11 @@
 # AngularBenchmark
 
-Small monorepo with two example of "Angular Counter App" demonstrating different state performance:
+Small monorepo with two example of "Angular Counter App" demonstrating different state manager performance:
 
-- `projects\ngrx` — Angular Counter App with NgRx state manager
-- `projects\ngss` — Angular Counter App with NgSimpleState state manager
-- `projects\elf` — Angular Counter App with Elf state manager
-- `projects\ngxs` — Angular Counter App with NGXS state manager
+- `projects\ngrx` — NgRx
+- `projects\ngss` — NgSimpleState
+- `projects\elf` — Elf
+- `projects\ngxs` — NGXS
 
 ## Quick start
 
