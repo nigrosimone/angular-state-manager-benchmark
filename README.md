@@ -6,6 +6,7 @@ Small monorepo with two example of "Angular Counter App" demonstrating different
 - `projects\ngss` — NgSimpleState
 - `projects\elf` — Elf
 - `projects\ngxs` — NGXS
+- `projects\akita` — Akita
 
 ## Quick start
 
