@@ -13,7 +13,7 @@ const urlMap: Record<string, string> = {
 
 
 // Number of times the button will be clicked in the benchmark
-const NUM_CLICK = 10_000;
+const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 10_000;
 
 // List of libraries to benchmark
 const LIBS = Object.keys(urlMap);
