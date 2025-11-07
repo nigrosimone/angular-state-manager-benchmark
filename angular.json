@@ -331,6 +331,94 @@
           }
         }
       }
+    },
+    "akita": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/akita",
+      "sourceRoot": "projects/akita/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/akita/src/main.ts",
+            "tsConfig": "projects/akita/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/akita/public"
+              }
+            ],
+            "styles": [
+              "projects/akita/src/styles.css"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "akita:build:production"
+            },
+            "development": {
+              "buildTarget": "akita:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/akita/tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/akita/public"
+              }
+            ],
+            "styles": [
+              "projects/akita/src/styles.css"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/akita/**/*.ts",
+              "projects/akita/**/*.html"
+            ],
+            "eslintConfig": "projects/akita/eslint.config.js"
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -1,8 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideZonelessChangeDetection, ChangeDetectionStrategy, Component, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { createStore, withProps } from '@ngneat/elf';
-import { select } from '@ngneat/elf';
+import { createStore, withProps, select } from '@ngneat/elf';
 
 interface Counter {
   count: number;
