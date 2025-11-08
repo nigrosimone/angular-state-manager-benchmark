@@ -123,7 +123,7 @@ function runBenchmark(lib: string) {
   });
 }
 
-describe('Angular Store Benchmark (Pro)', () => {
+describe('Angular Store Benchmark', () => {
   LIBS.forEach((lib) => {
     it(`${lib} benchmark`, () => runBenchmark(lib));
   });
