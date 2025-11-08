@@ -7,6 +7,8 @@ interface CounterState { count: number; }
 @Injectable()
 export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
 
+  override devMode = false;
+
   storeConfig(): NgSimpleStateStoreConfig<CounterState> {
     return {
       storeName: 'CounterStore'
