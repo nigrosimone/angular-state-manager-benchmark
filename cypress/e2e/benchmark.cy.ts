@@ -8,12 +8,12 @@ const urlMap: Record<string, string> = {
   akita: 'http://localhost:4204',
 };
 
-const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 1000;
-const RUNS = Number(Cypress.env('RUNS')) || 5;
+const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 250;
+const RUNS = Number(Cypress.env('RUNS')) || 3;
 const LIBS = Object.keys(urlMap);
 
 function simulateClicks(win: Window, button: HTMLButtonElement, n: number) {
-  return new Cypress.Promise<void>((resolve) => {
+  return new Cypress.Promise<{ duration: number; longTasks: number }>((resolve) => {
     let i = 0;
     const step = () => {
       if (i++ >= n) return resolve();
@@ -36,6 +36,9 @@ function runBenchmarkOnce(lib: string): Cypress.Chainable<{ duration: number; lo
 
         const button = win.document.querySelector('button') as HTMLButtonElement;
         if (!button) throw new Error('Button not found');
+        if (button.innerText !== String(0)) {
+          throw new Error(`Button click count mismatch: expected ${0}, got ${button.innerText}`);
+        }
 
         const now = Date.now();
         const startMark = `start-${lib}-${now}`;
@@ -50,16 +53,20 @@ function runBenchmarkOnce(lib: string): Cypress.Chainable<{ duration: number; lo
 
         win.performance.mark(startMark);
 
-        simulateClicks(win, button, NUM_CLICK);
+        simulateClicks(win, button, NUM_CLICK).then(() => {
+          win.performance.mark(endMark);
+          win.performance.measure(measureName, startMark, endMark);
+          observer.disconnect();
 
-        win.performance.mark(endMark);
-        win.performance.measure(measureName, startMark, endMark);
-        observer.disconnect();
+          const measure = win.performance.getEntriesByName(measureName)[0];
+          const duration = measure?.duration ?? 0;
 
-        const measure = win.performance.getEntriesByName(measureName)[0];
-        const duration = measure?.duration ?? 0;
+          if (button.innerText !== String(NUM_CLICK)) {
+            throw new Error(`Button click count mismatch: expected ${NUM_CLICK}, got ${button.innerText}`);
+          }
 
-        resolve({ duration, longTasks });
+          resolve({ duration, longTasks });
+        })
       });
     });
   });
