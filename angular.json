@@ -160,9 +160,6 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "projects/elf/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
             "tsConfig": "projects/elf/tsconfig.app.json",
             "assets": [
               {
@@ -216,10 +213,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
             "tsConfig": "projects/elf/tsconfig.spec.json",
             "assets": [
               {
