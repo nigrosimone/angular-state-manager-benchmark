@@ -18,6 +18,9 @@ function simulateClicks(win: Window, button: HTMLButtonElement, n: number) {
     const step = () => {
       if (i++ >= n) return resolve();
       button.click();
+      if (button.innerText === String(i)) {
+        return step(); // no need to wait if updated immediately
+      }
       win.requestAnimationFrame(step);
     };
     step();
