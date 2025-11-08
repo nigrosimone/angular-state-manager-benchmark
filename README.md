@@ -26,13 +26,13 @@ npm run benchmark:prod
 
 ```shell
 ===== FINAL BENCHMARK =====
-ngrx: 595.40 ms
-ngss: 44.00 ms
-elf: 705.60 ms
-ngxs: 182.60 ms
+ngrx: avg=0.92 ms (min=0.60, max=1.70, sd=0.40, long=0.0)
+ngss: avg=0.90 ms (min=0.50, max=1.40, sd=0.33, long=0.0)
+elf: avg=1.46 ms (min=0.70, max=2.70, sd=0.67, long=0.0)
+ngxs: avg=1.64 ms (min=0.80, max=2.70, sd=0.62, long=0.0)
+akita: avg=1.54 ms (min=0.60, max=2.90, sd=0.79, long=0.0)
 Fastest: ngss
-Difference: 661.60 ms (93.8%)
-Ratio: 16.04×
+Ratio: 1.82× (45.1% diff)
 ============================
 ```
 
