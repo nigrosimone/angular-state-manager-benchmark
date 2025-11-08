@@ -1,7 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideZonelessChangeDetection, ChangeDetectionStrategy, Component, provideBrowserGlobalErrorListeners, inject, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Store, StoreConfig } from '@datorama/akita';
+import { Query, Store, StoreConfig } from '@datorama/akita';
 
 interface Counter {
   count: number;
@@ -18,6 +18,16 @@ export class CounterStore extends Store<Counter> {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+export class CounterQuery extends Query<Counter> {
+  public readonly count$ = this.select(state => state.count);
+
+  // eslint-disable-next-line @angular-eslint/prefer-inject
+  constructor(protected override store: CounterStore) {
+    super(store);
+  }
+}
+
 @Component({
   selector: 'app-root',
   template: `
@@ -26,10 +36,10 @@ export class CounterStore extends Store<Counter> {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-
+  private readonly query = inject(CounterQuery);
   private readonly store = inject(CounterStore);
 
-  protected readonly count = toSignal(this.store._select(state => state.count));
+  protected readonly count = toSignal(this.query.count$);
 
   doIncrement() {
     this.store.update(state => ({
