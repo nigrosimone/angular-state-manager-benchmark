@@ -49,6 +49,9 @@ function runBenchmarkOnce(lib: string): Cypress.Chainable<{ duration: number; lo
         if (button.innerText !== String(0)) {
           throw new Error(`Button click count mismatch: expected ${0}, got ${button.innerText}`);
         }
+        if (win.document.title !== lib) {
+          throw new Error(`Title: expected ${lib}, got ${win.document.title}`);
+        }
 
         const now = Date.now();
         const startMark = `start-${lib}-${now}`;
