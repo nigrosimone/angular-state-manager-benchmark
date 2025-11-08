@@ -53,6 +53,12 @@
     },
     {
       "path": "./projects/akita/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/angular/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/angular/tsconfig.spec.json"
     }
   ]
 }

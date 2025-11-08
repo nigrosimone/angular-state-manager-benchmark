@@ -6,6 +6,7 @@ const urlMap: Record<string, string> = {
   elf: 'http://localhost:4202',
   ngxs: 'http://localhost:4203',
   akita: 'http://localhost:4204',
+  angular: 'http://localhost:4205',
 };
 
 const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 500;
@@ -16,8 +17,14 @@ function simulateClicks(win: Window, button: HTMLButtonElement, n: number) {
   return new Cypress.Promise<{ duration: number; longTasks: number }>((resolve) => {
     let i = 0;
     const step = () => {
+      if (button.innerText !== String(i)) {
+        return win.requestAnimationFrame(step);
+      }
       if (i++ >= n) return resolve();
       button.click();
+      if (button.innerText === String(n)) {
+        return resolve(); // no need to wait if updated immediately
+      }
       if (button.innerText === String(i)) {
         return step(); // no need to wait if updated immediately
       }
