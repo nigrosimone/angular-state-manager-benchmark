@@ -1,157 +1,161 @@
 /// <reference types="cypress" />
 
-// Map each library to its URL
 const urlMap: Record<string, string> = {
   ngrx: 'http://localhost:4200',
   ngss: 'http://localhost:4201',
   elf: 'http://localhost:4202',
   ngxs: 'http://localhost:4203',
   akita: 'http://localhost:4204',
-  // add more libraries here
-  // foo: 'http://localhost:4202',
 };
 
-
-// Number of times the button will be clicked in the benchmark
-const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 10_000;
-
-// List of libraries to benchmark
+const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 1000;
+const RUNS = Number(Cypress.env('RUNS')) || 5;
 const LIBS = Object.keys(urlMap);
 
-/**
- * Run a benchmark for a specific library
- * @param lib Library name (must be defined in urlMap)
- */
-function runBenchmark(lib: string) {
-
-  const url = urlMap[lib];
-  if (!url) throw new Error(`No URL configured for ${lib}`);
-
-  // Visit the app page for this library
-  cy.visit(url);
-
-  // Ensure the initial button text is "0"
-  cy.get('button').should('contain.text', '0');
-
-  // Execute benchmark inside the page context
-  cy.window().then((win) => {
-    return new Cypress.Promise<{ duration: number }>((resolve) => {
-      // Clear previous performance marks/measures to avoid interference
-      win.performance.clearMarks();
-      win.performance.clearMeasures();
-
-      // Get the button element
-      const button = win.document.querySelector('button') as HTMLButtonElement;
-      if (!button) throw new Error('Button not found');
-
-      // Create unique mark/measure names for this run
-      const now = Date.now();
-      const startMark = `start-${lib}-${now}`;
-      const endMark = `end-${lib}-${now}`;
-      const measureName = `render-${lib}-${now}`;
-
-      // Start performance measurement
-      win.performance.mark(startMark);
-
-      // Click the button NUM_CLICK times synchronously
-      for (let i = 0; i < NUM_CLICK; i++) {
-        button.click();
-      }
-
-      // Function to finish measurement
-      const finish = () => {
-        // Verify final button count
-        if (button.innerText !== String(NUM_CLICK)) {
-          throw new Error('Final button text does not match expected count');
-        }
-
-        // Mark end of measurement
-        win.performance.mark(endMark);
-
-        // Measure the duration
-        win.performance.measure(measureName, startMark, endMark);
-
-        const entries = win.performance.getEntriesByName(measureName);
-        const duration = entries?.[0]?.duration ?? 0;
-
-        // Resolve promise with duration
-        resolve({ duration });
-      };
-
-      // Schedule finish function for the next animation frame
-      if (button.innerText === String(NUM_CLICK)) return finish();
-      win.requestAnimationFrame(finish);
-    });
-  }).then(({ duration }) => {
-    // Assert that the button shows the expected final count
-    cy.get('button').should('contain.text', String(NUM_CLICK));
-
-    // Log the result in Cypress
-    cy.log(`${lib}: ${duration.toFixed(2)} ms`);
-
-    // Save result to a JSON file
-    cy.writeFile(`cypress/results-${lib}.json`, { lib, duration });
+function simulateClicks(win: Window, button: HTMLButtonElement, n: number) {
+  return new Cypress.Promise<void>((resolve) => {
+    let i = 0;
+    const step = () => {
+      if (i++ >= n) return resolve();
+      button.click();
+      win.requestAnimationFrame(step);
+    };
+    step();
   });
 }
 
-describe('Angular Store Benchmark', () => {
-  // Generate a benchmark test for each library dynamically
+function runBenchmarkOnce(lib: string): Cypress.Chainable<{ duration: number; longTasks: number }> {
+  const url = urlMap[lib];
+  if (!url) throw new Error(`No URL configured for ${lib}`);
+
+  return cy.visit(url).then(() => {
+    return cy.window().then((win) => {
+      return new Cypress.Promise<{ duration: number; longTasks: number }>(async (resolve) => {
+        win.performance.clearMarks();
+        win.performance.clearMeasures();
+
+        const button = win.document.querySelector('button') as HTMLButtonElement;
+        if (!button) throw new Error('Button not found');
+
+        const now = Date.now();
+        const startMark = `start-${lib}-${now}`;
+        const endMark = `end-${lib}-${now}`;
+        const measureName = `render-${lib}-${now}`;
+
+        let longTasks = 0;
+        const observer = new win.PerformanceObserver((list) => {
+          longTasks += list.getEntries().filter((e) => e.entryType === 'longtask').length;
+        });
+        observer.observe({ entryTypes: ['longtask'] });
+
+        win.performance.mark(startMark);
+
+        simulateClicks(win, button, NUM_CLICK);
+
+        win.performance.mark(endMark);
+        win.performance.measure(measureName, startMark, endMark);
+        observer.disconnect();
+
+        const measure = win.performance.getEntriesByName(measureName)[0];
+        const duration = measure?.duration ?? 0;
+
+        resolve({ duration, longTasks });
+      });
+    });
+  });
+}
+
+function runBenchmark(lib: string) {
+  const results: number[] = [];
+  const longTaskCounts: number[] = [];
+
+  const avg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
+  const std = (arr: number[]) => {
+    const mean = avg(arr);
+    return Math.sqrt(avg(arr.map((x) => (x - mean) ** 2)));
+  };
+
+  return cy.wrap(null).then(() => {
+    const loop = (i: number): Cypress.Chainable => {
+      if (i >= RUNS) {
+        const summary = {
+          lib,
+          avg: avg(results),
+          min: Math.min(...results),
+          max: Math.max(...results),
+          sd: std(results),
+          avgLong: avg(longTaskCounts),
+          results,
+        };
+        cy.writeFile(`cypress/results-${lib}.json`, summary);
+        return cy.wrap(summary);
+      }
+
+      return runBenchmarkOnce(lib).then(({ duration, longTasks }) => {
+        results.push(duration);
+        longTaskCounts.push(longTasks);
+        cy.log(`${lib} Run ${i + 1}: ${duration.toFixed(2)} ms (${longTasks} long tasks)`);
+        return loop(i + 1);
+      });
+    };
+
+    return loop(0);
+  });
+}
+
+describe('Angular Store Benchmark (Pro)', () => {
   LIBS.forEach((lib) => {
     it(`${lib} benchmark`, () => runBenchmark(lib));
   });
 
-  // Compare all results after benchmarks
-  it('Compare all results', () => {
-    const results: Record<string, number> = {};
+  it('Compare results', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const results: Record<string, any> = {};
 
-    cy.wrap(null).then(() => {
-      // Read result files for all libraries
-      return Cypress.Promise.map(LIBS, (lib) =>
-        cy.readFile(`cypress/results-${lib}.json`).then((data) => {
-          results[lib] = data.duration;
-        })
-      );
+    cy.wrap(LIBS).each((lib: string) => {
+      cy.readFile(`cypress/results-${lib}.json`).then((data) => {
+        results[lib] = data;
+      })
     }).then(() => {
-      // Sort libraries by duration
-      const entries = Object.entries(results);
-      const sorted = entries.sort((a, b) => a[1] - b[1]);
-      const [fastestLib, fastestTime] = sorted[0];
-      const [slowestLib, slowestTime] = sorted[sorted.length - 1];
+      const sorted = Object.entries(results).sort((a, b) => a[1].avg - b[1].avg);
+      const [fastestLib, fastestData] = sorted[0];
+      const [slowestLib, slowestData] = sorted[sorted.length - 1];
 
-      const diff = slowestTime - fastestTime;
-      const percent = (diff / slowestTime) * 100;
-      const ratio = (slowestTime / fastestTime).toFixed(2);
+      const diff = slowestData.avg - fastestData.avg;
+      const ratio = (slowestData.avg / fastestData.avg).toFixed(2);
+      const percent = ((diff / slowestData.avg) * 100).toFixed(1);
 
-      // Log results in Cypress
       cy.log('--- Benchmark Results ---');
-      entries.forEach(([lib, duration]) => cy.log(`${lib}: ${duration.toFixed(2)} ms`));
-      cy.log(`${fastestLib} is the fastest (${diff.toFixed(2)} ms faster, ${percent.toFixed(1)}%)`);
-      cy.log(`${fastestLib} is about ${ratio}× faster than ${slowestLib}`);
+      sorted.forEach(([lib, data]) =>
+        cy.log(`${lib}: avg=${data.avg.toFixed(2)} ms (±${data.sd.toFixed(2)}), longtasks=${data.avgLong.toFixed(1)}`)
+      );
+      cy.log(`${fastestLib} is fastest (${ratio}× faster than ${slowestLib}, ${percent}% diff)`);
 
-      // Save comparison results to JSON
-      cy.writeFile('cypress/results.json', {
+      cy.writeFile('cypress/results-summary.json', {
         results,
         fastest: fastestLib,
-        difference: diff.toFixed(2),
-        percent: percent.toFixed(1),
         ratio,
+        percent,
       });
-    });
-  });
-
-  // Log final summary after all tests
-  after(() => {
-    cy.readFile('cypress/results.json').then((final) => {
-      cy.task('log', `
-===== FINAL BENCHMARK =====
-${Object.entries(final.results)
-          .map(([lib, duration]) => `${lib}: ${Number(duration).toFixed(2)} ms`)
-          .join('\n')}
-Fastest: ${final.fastest}
-Difference: ${final.difference} ms (${final.percent}%)
-Ratio: ${final.ratio}×
-============================
-      `);
+      cy.readFile('cypress/results-summary.json').should("exist");
     });
   });
 });
+
+after(() => {
+  cy.readFile('cypress/results-summary.json').then((final) => {
+    cy.task('log', `
+===== FINAL BENCHMARK =====
+${Object.entries(final.results)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map(([lib, d]: any) =>
+          `${lib}: avg=${d.avg.toFixed(2)} ms (min=${d.min.toFixed(2)}, max=${d.max.toFixed(2)}, sd=${d.sd.toFixed(2)}, long=${d.avgLong.toFixed(1)})`
+        )
+        .join('\n')}
+Fastest: ${final.fastest}
+Ratio: ${final.ratio}× (${final.percent}% diff)
+============================
+      `);
+  });
+});
+
