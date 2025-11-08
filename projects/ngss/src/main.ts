@@ -7,7 +7,7 @@ interface CounterState { count: number; }
 @Injectable()
 export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
 
-  override devMode = false;
+  override devMode = false; // force devMode also in development for demonstration
 
   storeConfig(): NgSimpleStateStoreConfig<CounterState> {
     return {
@@ -32,7 +32,7 @@ export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
   }
 
   override deepFreeze(state: CounterState): CounterState {
-    // NB: Skip deep freeze for performance reasons. Ngrx does not deep freeze by default.
+    // NB: Skip deep freeze for performance reasons. Others does not deep freeze by default in devMode.
     return state;
   }
 }
