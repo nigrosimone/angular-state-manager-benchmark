@@ -21,16 +21,6 @@ export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
     };
   }
 
-  selectCount() {
-    return this.selectState(state => state.count);
-  }
-
-  increment() {
-    this.setState(state => ({
-      count: state.count + 1
-    }), 'increment');
-  }
-
   override deepFreeze(state: CounterState): CounterState {
     // NB: Skip deep freeze for performance reasons. Others does not deep freeze by default in devMode.
     return state;
@@ -47,10 +37,12 @@ export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
 export class App {
   private readonly store = inject(CounterStore);
 
-  protected readonly counter: Signal<number> = this.store.selectCount();
+  protected readonly counter: Signal<number> = this.store.selectState(state => state.count);;
 
   doIncrement() {
-    this.store.increment();
+    this.store.setState(state => ({
+      count: state.count + 1
+    }), 'increment');
   }
 }
 
