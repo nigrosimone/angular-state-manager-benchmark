@@ -20,9 +20,6 @@
                 "glob": "**/*",
                 "input": "projects/ngrx/public"
               }
-            ],
-            "styles": [
-              "projects/ngrx/src/styles.css"
             ]
           },
           "configurations": {
@@ -93,9 +90,6 @@
                 "glob": "**/*",
                 "input": "projects/ngss/public"
               }
-            ],
-            "styles": [
-              "projects/ngss/src/styles.css"
             ]
           },
           "configurations": {
@@ -166,9 +160,6 @@
                 "glob": "**/*",
                 "input": "projects/elf/public"
               }
-            ],
-            "styles": [
-              "projects/elf/src/styles.css"
             ]
           },
           "configurations": {
@@ -219,9 +210,6 @@
                 "glob": "**/*",
                 "input": "projects/elf/public"
               }
-            ],
-            "styles": [
-              "projects/elf/src/styles.css"
             ]
           }
         },
@@ -254,9 +242,6 @@
                 "glob": "**/*",
                 "input": "projects/ngxs/public"
               }
-            ],
-            "styles": [
-              "projects/ngxs/src/styles.css"
             ]
           },
           "configurations": {
@@ -307,9 +292,6 @@
                 "glob": "**/*",
                 "input": "projects/ngxs/public"
               }
-            ],
-            "styles": [
-              "projects/ngxs/src/styles.css"
             ]
           }
         },
@@ -342,9 +324,6 @@
                 "glob": "**/*",
                 "input": "projects/akita/public"
               }
-            ],
-            "styles": [
-              "projects/akita/src/styles.css"
             ]
           },
           "configurations": {
@@ -395,9 +374,6 @@
                 "glob": "**/*",
                 "input": "projects/akita/public"
               }
-            ],
-            "styles": [
-              "projects/akita/src/styles.css"
             ]
           }
         },
