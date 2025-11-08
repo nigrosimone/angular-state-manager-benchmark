@@ -2,6 +2,7 @@
 
 Small monorepo with two example of "Angular Counter App" demonstrating different state manager performance:
 
+- `projects\angular` — Angular
 - `projects\ngrx` — NgRx
 - `projects\ngss` — NgSimpleState
 - `projects\elf` — Elf
