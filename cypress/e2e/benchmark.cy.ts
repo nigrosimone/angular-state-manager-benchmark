@@ -8,8 +8,8 @@ const urlMap: Record<string, string> = {
   akita: 'http://localhost:4204',
 };
 
-const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 250;
-const RUNS = Number(Cypress.env('RUNS')) || 3;
+const NUM_CLICK = Number(Cypress.env('NUM_CLICK')) || 500;
+const RUNS = Number(Cypress.env('RUNS')) || 5;
 const LIBS = Object.keys(urlMap);
 
 function simulateClicks(win: Window, button: HTMLButtonElement, n: number) {
