@@ -32,7 +32,7 @@ export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
 export class App {
   private readonly store = inject(CounterStore);
 
-  protected readonly counter: Signal<number> = this.store.selectState(state => state.count);;
+  protected readonly counter: Signal<number> = this.store.selectState(state => state.count);
 
   doIncrement() {
     this.store.setState(state => ({
