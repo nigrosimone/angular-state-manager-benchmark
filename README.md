@@ -1,29 +1,29 @@
 # AngularBenchmark
 
-Small monorepo with two example of "Angular Counter App" demonstrating different state manager performance:
+Small monorepo demonstrating different state manager performance:
 
-- `projects\angular` — [Angular](https://angular.dev/)
-- `projects\ngrx` — [NgRx](https://ngrx.io/)
-- `projects\ngss` — [NgSimpleState](https://www.npmjs.com/package/ng-simple-state)
-- `projects\elf` — [Elf](https://ngneat.github.io/elf/)
-- `projects\ngxs` — [NGXS](https://www.ngxs.io/)
-- `projects\akita` — [Akita](https://opensource.salesforce.com/akita/)
+- [projects\angular](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/angular/src/main.ts) — [Angular](https://angular.dev/)
+- [projects\ngrx](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/ngrx/src/main.ts) — [NgRx](https://ngrx.io/)
+- [projects\ngss](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/ngss/src/main.ts) — [NgSimpleState](https://www.npmjs.com/package/ng-simple-state)
+- [projects\elf](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/elf/src/main.ts) — [Elf](https://ngneat.github.io/elf/)
+- [projects\ngxs](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/ngxs/src/main.ts) — [NGXS](https://www.ngxs.io/)
+- [projects\akita](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/akita/src/main.ts) — [Akita](https://opensource.salesforce.com/akita/)
 
 ## Quick start
 
-1 Install dependencies
+Install dependencies
 
 ```shell
 npm install
 ```
 
-2 Run benchmark:
+Run benchmark:
 
 ```shell
 npm run benchmark:prod
 ```
 
-3 Output
+Output
 
 ```shell
 ===== FINAL BENCHMARK =====
