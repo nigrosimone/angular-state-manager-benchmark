@@ -30,10 +30,10 @@
     "wait-on": "npx wait-on http://localhost:4200 http://localhost:4201 http://localhost:4202 http://localhost:4203 http://localhost:4204 http://localhost:4205",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
-    "benchmark:dev": "npx concurrently -k \"npm run start:all\" \"npm run wait-on && npx cypress run\"",
-    "benchmark:dev:open": "npx concurrently -k \"npm run start:all\" \"npm run wait-on && npx cypress open\"",
-    "benchmark:prod": "npm run build:all && npx concurrently -k \"npm run serve:all\" \"npm run wait-on && npx cypress run\"",
-    "benchmark:prod:open": "npm run build:all && npx concurrently -k \"npm run serve:all\" \"npm run wait-on && npx cypress open\"",
+    "benchmark:dev": "npx concurrently -k \"npm run start:all\" \"npm run wait-on && npx cypress run --env NUM_CLICK=25\"",
+    "benchmark:dev:open": "npx concurrently -k \"npm run start:all\" \"npm run wait-on && npx cypress open --env NUM_CLICK=25\"",
+    "benchmark:prod": "npm run build:all && npx concurrently -k \"npm run serve:all\" \"npm run wait-on && npx cypress run --env NUM_CLICK=500\"",
+    "benchmark:prod:open": "npm run build:all && npx concurrently -k \"npm run serve:all\" \"npm run wait-on && npx cypress open --env NUM_CLICK=500\"",
     "lint": "ng lint"
   },
   "prettier": {

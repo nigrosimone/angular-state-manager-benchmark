@@ -167,6 +167,8 @@ after(() => {
   cy.readFile('cypress/results-summary.json').then((final) => {
     cy.task('log', `
 ===== FINAL BENCHMARK =====
+${NUM_CLICK} clicks, ${RUNS} runs
+----------------------------
 ${Object.entries(final.results)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map(([lib, d]: any) =>
