@@ -20,11 +20,6 @@ export class CounterStore extends NgSimpleStateBaseSignalStore<CounterState> {
       count: 0
     };
   }
-
-  override deepFreeze(state: CounterState): CounterState {
-    // NB: Skip deep freeze for performance reasons. Others does not deep freeze by default in devMode.
-    return state;
-  }
 }
 
 @Component({
