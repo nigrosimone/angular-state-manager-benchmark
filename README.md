@@ -2,12 +2,12 @@
 
 Small monorepo with two example of "Angular Counter App" demonstrating different state manager performance:
 
-- `projects\angular` — Angular
-- `projects\ngrx` — NgRx
-- `projects\ngss` — NgSimpleState
-- `projects\elf` — Elf
-- `projects\ngxs` — NGXS
-- `projects\akita` — Akita
+- `projects\angular` — [Angular](https://angular.dev/)
+- `projects\ngrx` — [NgRx](https://ngrx.io/)
+- `projects\ngss` — [NgSimpleState](https://www.npmjs.com/package/ng-simple-state)
+- `projects\elf` — [Elf](https://ngneat.github.io/elf/)
+- `projects\ngxs` — [NGXS](https://www.ngxs.io/)
+- `projects\akita` — [Akita](https://opensource.salesforce.com/akita/)
 
 ## Quick start
 
