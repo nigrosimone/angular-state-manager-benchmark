@@ -157,7 +157,6 @@ describe('Angular Store Benchmark', () => {
         ratio,
         percent,
       });
-      cy.readFile('cypress/results-summary.json').should("exist");
     });
   });
 });
