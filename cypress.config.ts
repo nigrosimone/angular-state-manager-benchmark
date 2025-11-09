@@ -4,6 +4,7 @@ export default defineConfig({
   defaultCommandTimeout: 20000,
   numTestsKeptInMemory: 0,
   video: false,
+  chromeWebSecurity: false,
   screenshotOnRunFailure: false,
   retries: 0,
   e2e: {
