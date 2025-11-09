@@ -27,14 +27,14 @@ npm run benchmark:prod
 
 ```shell
 ===== FINAL BENCHMARK =====
-ngrx: avg=8471.50 ms (min=8301.70, max=8584.60, sd=133.74, long=0.0)
-ngss: avg=8474.60 ms (min=8306.70, max=8598.30, sd=131.50, long=0.0)
-elf: avg=8629.46 ms (min=8320.70, max=9052.80, sd=236.35, long=0.0)
-ngxs: avg=8625.42 ms (min=8322.00, max=9035.40, sd=229.90, long=0.0)
-akita: avg=8470.66 ms (min=8300.30, max=8585.60, sd=132.28, long=0.0)
-angular: avg=8483.76 ms (min=8306.80, max=8601.80, sd=140.10, long=0.0)
-Fastest: akita
-Ratio: 1.02× (1.8% diff)
+ngrx: avg=8481.94 ms (min=8293.70, max=8603.00, sd=138.12, long=0.0)
+ngss: avg=8469.78 ms (min=8288.80, max=8589.70, sd=134.75, long=0.0)
+elf: avg=8612.54 ms (min=8304.40, max=8988.40, sd=218.33, long=0.0)
+ngxs: avg=8471.86 ms (min=8288.70, max=8598.00, sd=136.18, long=0.0)
+akita: avg=8635.12 ms (min=8303.80, max=9088.80, sd=253.40, long=0.0)
+angular: avg=8564.78 ms (min=8307.90, max=8745.80, sd=142.18, long=0.0)
+Fastest: ngss
+Ratio: 1.02× (1.9% diff)
 ============================
 ```
 
