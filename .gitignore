@@ -42,3 +42,11 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 /cypress/screenshots/benchmark.cy.ts
+/cypress/results.json
+/cypress/results-akita.json
+/cypress/results-angular.json
+/cypress/results-elf.json
+/cypress/results-ngrx.json
+/cypress/results-ngss.json
+/cypress/results-ngxs.json
+/cypress/results-summary.json
