@@ -41,7 +41,7 @@ function runBenchmarkOnce(lib: string): Cypress.Chainable<{ duration: number; lo
   return cy.visit(url).then(() => {
     cy.contains('button', '0').should('be.visible');
     return cy.window().then((win) => {
-      return new Cypress.Promise<{ duration: number; longTasks: number }>(async (resolve) => {
+      return new Cypress.Promise<{ duration: number; longTasks: number }>((resolve) => {
         win.performance.clearMarks();
         win.performance.clearMeasures();
 
