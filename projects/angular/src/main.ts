@@ -12,7 +12,7 @@ interface CounterState { count: number; }
 })
 export class App {
 
-  protected readonly counterState = signal<CounterState>({ count: 0 });
+  private readonly counterState = signal<CounterState>({ count: 0 });
   protected readonly counter = computed(() => this.counterState().count);
 
   doIncrement() {
