@@ -40,6 +40,7 @@ function runBenchmarkOnce(lib: string): Cypress.Chainable<{ duration: number; lo
 
   return cy.visit(url).then(() => {
     cy.contains('button', '0').should('be.visible');
+    cy.wait(200); // wait for angular is fully stable
     return cy.window().then((win) => {
       return new Cypress.Promise<{ duration: number; longTasks: number }>((resolve) => {
         win.performance.clearMarks();
