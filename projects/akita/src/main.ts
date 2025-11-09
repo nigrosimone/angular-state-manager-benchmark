@@ -2,6 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideZonelessChangeDetection, ChangeDetectionStrategy, Component, provideBrowserGlobalErrorListeners, inject, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Query, Store, StoreConfig } from '@datorama/akita';
+import { Observable } from 'rxjs';
 
 interface Counter {
   count: number;
@@ -20,11 +21,12 @@ export class CounterStore extends Store<Counter> {
 
 @Injectable({ providedIn: 'root' })
 export class CounterQuery extends Query<Counter> {
-  public readonly count$ = this.select(state => state.count);
+  public readonly count$: Observable<number>;
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(protected override store: CounterStore) {
     super(store);
+    this.count$ = this.select(state => state.count);
   }
 }
 
