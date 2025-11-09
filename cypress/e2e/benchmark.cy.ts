@@ -39,6 +39,7 @@ function runBenchmarkOnce(lib: string): Cypress.Chainable<{ duration: number; lo
   if (!url) throw new Error(`No URL configured for ${lib}`);
 
   return cy.visit(url).then(() => {
+    cy.contains('button', '0').should('be.visible');
     return cy.window().then((win) => {
       return new Cypress.Promise<{ duration: number; longTasks: number }>(async (resolve) => {
         win.performance.clearMarks();
