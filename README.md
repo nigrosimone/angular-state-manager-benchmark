@@ -1,4 +1,4 @@
-# AngularBenchmark
+# Angular state manager benchmark
 
 Small monorepo demonstrating different state manager performance:
 
