@@ -35,7 +35,7 @@ export class App {
   protected readonly counter: Signal<number> = this.store.selectState(state => state.count);
 
   doIncrement() {
-    this.store.setState(state => ({
+    this.store.replaceState(state => ({
       count: state.count + 1
     }), 'increment');
   }
