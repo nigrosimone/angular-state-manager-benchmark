@@ -3,9 +3,7 @@
 const urlMap: Record<string, string> = {
   ngrx: 'http://localhost:4200',
   ngss: 'http://localhost:4201',
-  elf: 'http://localhost:4202',
   ngxs: 'http://localhost:4203',
-  akita: 'http://localhost:4204',
   angular: 'http://localhost:4205',
 };
 

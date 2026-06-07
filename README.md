@@ -5,10 +5,7 @@ Small monorepo demonstrating different state manager performance:
 - [projects\angular](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/angular/src/main.ts) — [Angular](https://angular.dev/)
 - [projects\ngrx](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/ngrx/src/main.ts) — [NgRx](https://ngrx.io/)
 - [projects\ngss](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/ngss/src/main.ts) — [NgSimpleState](https://www.npmjs.com/package/ng-simple-state)
-- [projects\elf](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/elf/src/main.ts) — [Elf](https://ngneat.github.io/elf/)
 - [projects\ngxs](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/ngxs/src/main.ts) — [NGXS](https://www.ngxs.io/)
-- [projects\akita](https://github.com/nigrosimone/angular-state-manager-benchmark/blob/master/projects/akita/src/main.ts) — [Akita](https://opensource.salesforce.com/akita/)
-
 ## Quick start
 
 Install dependencies
@@ -29,9 +26,7 @@ Output
 ===== FINAL BENCHMARK =====
 ngrx: avg=8481.94 ms (min=8293.70, max=8603.00, sd=138.12, long=0.0)
 ngss: avg=8469.78 ms (min=8288.80, max=8589.70, sd=134.75, long=0.0)
-elf: avg=8612.54 ms (min=8304.40, max=8988.40, sd=218.33, long=0.0)
 ngxs: avg=8471.86 ms (min=8288.70, max=8598.00, sd=136.18, long=0.0)
-akita: avg=8635.12 ms (min=8303.80, max=9088.80, sd=253.40, long=0.0)
 angular: avg=8564.78 ms (min=8307.90, max=8745.80, sd=142.18, long=0.0)
 Fastest: ngss
 Ratio: 1.02× (1.9% diff)

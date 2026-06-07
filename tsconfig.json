@@ -37,22 +37,10 @@
       "path": "./projects/ngss/tsconfig.spec.json"
     },
     {
-      "path": "./projects/elf/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/elf/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/ngxs/tsconfig.app.json"
     },
     {
       "path": "./projects/ngxs/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/akita/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/akita/tsconfig.spec.json"
     },
     {
       "path": "./projects/angular/tsconfig.app.json"
